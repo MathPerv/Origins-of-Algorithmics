@@ -28,6 +28,17 @@ function floyd(G::AbstractMatrix)
     return C
 end
 
+#Задача 6 
+function optpathfloyd(next::AbstractMatrix, i::Integer, j::Integer)
+    p = [i]
+    f = i
+    while (fin!=j)
+        push!(p,next[f,j])
+        f = next[f,j]
+    end
+    return p
+end
+
 #Задача 7
 
 function dijkstra(G::AbstractMatrix, s::Integer)

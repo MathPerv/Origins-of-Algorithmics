@@ -1,3 +1,23 @@
+#Задача 1
+
+function dfsearch(startver::T, graph) where T
+    mark = zeros(Bool, length(graph))
+    stack  = [startver]
+    mark[startver] = 1
+    visited = Int64[]
+    while !isempty(stack)
+        v = pop!(stack)
+        push!(visited,v)
+        for u in graph[v]
+            if mark[u] == 0
+                push!(stack,u)
+                mark[u] = 1
+            end
+        end
+    end
+    return visited
+end
+
 #Задача 3
 
 function valency(G)
