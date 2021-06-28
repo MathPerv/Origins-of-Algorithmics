@@ -18,7 +18,7 @@ end
 
 #Задача 2
 
-newton_cosx() = newton(x -> (-cos(x)/sin(x)), 0.5)
+newton_cosx() = newton(x -> (x-cos(x))/(1+sin(x)), 0.5)
 
 #Задача 3
 
@@ -61,26 +61,17 @@ function count_polynom(x::Number, p::Polynomial)::Number
     end
     return result
 end
+newton(polinom_coeff::Vector{Number}, x; ε_x=1e-8, ε_y=1e-8, nmaxiter=20)=
+    newton(x->(y=evaldiffpoly(x, polynom_coeff); y[1]/y[2]), x; ε_x, ε_y, nmaxiter)
 
-function newton_pol(polynom_coeff::AbstractVector, x; ε_x=1e-8, ε_y=1e-8, nmaxiter=20)
-    x1 = x
-    x2 = x + 2 * ε_x
-    p = Polynomial(polynom_coeff)
-    p1 = find_deriative(copy(p))
-    f = count_polynom(x1, p)
-    for i in 1:nmaxiter
-        if (abs(x1 - x2) < ε_x || f < ε_y) && i > 1
-            return x1
-        end
-        x2 = x1
-        f = count_polynom(x1, p)
-        f1 = count_polynom(x1, p1)
-        x1 = x1 - f/f1
+function evaldiffpoly(x,polynom_coeff)
+    Q_deriative=0
+    Q=0
+    for a in polinom_coeff
+        Q_deriative=Q_deriativex+Q
+        Q=Q*x+a
     end
-    if abs(x1 - x2) < ε_x || f < ε_y
-        return x1
-    end
-    return nothing
+    return Q, Q′
 end
 
 #Задача 8
